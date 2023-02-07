@@ -1,20 +1,17 @@
 <?php
 /*
-	*Recieve data that is sent from MyCost app
-	*Save the data into the 'mycost' database
+	*Recieve data that is sent from Phinanze app
+	*Save the data into the database
 	*Return SUCCESS or error message
 */
-
 require_once('connectDB.php');
 require_once('requestVerification.php');
 
-if(isset($_POST['token']) && isset($_POST['userid']))
-{
+if(isset($_POST['token']) && isset($_POST['userid'])) {
 	$token  = mysqli_real_escape_string($connect, $_POST['token']);
 	$userid = mysqli_real_escape_string($connect, $_POST['userid']);
 	
-	if(IsAuthenticRequest($connect, $userid, $token))//request verified as authentic
-	{
+	if(IsAuthenticRequest($connect, $userid, $token)) {
 		$note              = mysqli_real_escape_string($connect, $_POST['note']);
 		$day               = mysqli_real_escape_string($connect, $_POST['day']);
 		$month             = mysqli_real_escape_string($connect, $_POST['month']);
@@ -39,8 +36,7 @@ if(isset($_POST['token']) && isset($_POST['userid']))
 		$result = mysqli_query($connect, $query) or die('Server connection error');
 		$count  = mysqli_num_rows($result);
 		
-		if($count > 0)
-		{
+		if($count > 0) {
 			$row = mysqli_fetch_array($result);
 			$id  = $row['id'];
 			
@@ -54,8 +50,7 @@ if(isset($_POST['token']) && isset($_POST['userid']))
 			
 			die('SUCCESS');
 		}
-		else
-		{
+		else {
 			$query  = "INSERT INTO daily_info (note, day, month, year, expenseReasons, expenseAmounts, 
 					  expenseCategories, expenseComments, earningSources, earningAmounts, earningCategories,
 					  earningComments, userid, totalExpense, totalEarning) VALUES ('$note', '$day', '$month',
@@ -67,13 +62,11 @@ if(isset($_POST['token']) && isset($_POST['userid']))
 			die('SUCCESS');
 		}
 	}
-	else //request from unauthentic source
-	{
+	else {
 		die('Server connection error');
 	}
 }
-else
-{ 
+else { 
 	die('Server connection error'); 
 }
 

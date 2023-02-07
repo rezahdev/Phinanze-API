@@ -1,10 +1,8 @@
 <?php
 /*
-	*Encrypt a string
+	* Encrypt or Decrypt a string
 */
-
-function Encrypt($string, $key)
-{
+function Encrypt($string, $key) {
     $method    = "AES-256-CBC";
     $secret_iv = 'secret iv';
     $key       = hash('sha256', $key);
@@ -18,8 +16,7 @@ function Encrypt($string, $key)
     return $encryptedString;
 }
 
-function Decrypt($string, $key)
-{
+function Decrypt($string, $key) {
     $method    = "AES-256-CBC";
     $secret_iv = 'secret iv';
     $key       = hash('sha256', $key);
